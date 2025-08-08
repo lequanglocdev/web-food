@@ -1,4 +1,5 @@
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { Product } from './product.model';
+import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
 
 export enum ProductVariantType {
   THIN = 'Mỏng',
@@ -7,8 +8,9 @@ export enum ProductVariantType {
 }
 
 export enum ProductVariantSize {
-  THIN = 'Mỏng',
-  NORMAL = 'Bình thường'
+  SMALL = 'SMALL',
+  MEDIUM = 'MEDIUM',
+  LARGE = 'LARGE'
 
 }
 @Table
@@ -43,9 +45,12 @@ export class ProductVariants extends Model<ProductVariants> {
   })
   isActive: boolean
 
+  @ForeignKey(() => Product)
   @Column({
     allowNull: false,
     type: DataType.INTEGER
   })
   productId: number
+  @BelongsTo(() => Product)
+  product: Product
 }
